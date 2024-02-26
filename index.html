@@ -8,19 +8,22 @@
 </head>
 <body onload="onInit()">
     <h1>Canvas EX</h1>
-    <canvas width="450" height="450"
-    onclick="onDraw(event)"
-    onmousedown="onStartLine(event)"
-    onmousemove="onDrawLine(event)"
-    onmouseup="onEndLine(event)"></canvas>
+
+    <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" accept="image/*">
+
+    <div class="canvas-container">
+        <canvas width="600" height="800"></canvas>
+    </div>
 
     <div class="actions">
         <input oninput="onSetShapeStyle(this)" type="color" name="style" id="style">
         <input oninput="onSetShapeFill(this)" type="color" name="fill" id="fill">
         <button onclick="onSetShape('rect')">Rectangle</button>
         <button onclick="onSetShape('circle')">Circle</button>
+        <button onclick="onSetShape('pen')">Pen</button>
         <button onclick="onClearCanvas()">Clear</button>
     </div>
+
 
     <script src="js/main.js"></script>
 </body>

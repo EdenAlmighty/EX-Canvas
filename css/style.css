@@ -12,6 +12,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
 }
+.canvas-container {
+    width: 70vw;
+    height: 70vh;
+  }
 
 canvas {
 	background-color: white;
