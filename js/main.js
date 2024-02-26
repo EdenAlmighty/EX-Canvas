@@ -52,7 +52,9 @@ function addTouchListeners() {
 
 
 function onStartLine(ev) {
-    gPen.pos = { x: ev.offsetX, y: ev.offsetY }
+    // gPen.pos = { x: ev.offsetX, y: ev.offsetY }
+    gPen.pos = getEvPos(ev)
+
     gPen.isDown = true
 
     gLine = []
@@ -67,32 +69,21 @@ function onDrawLine(ev) {
     if (!gPen.isDown) return
 
     gPen.pos = getEvPos(ev)
-    gCtx.beginPath()
-    // gCtx.lineWidth = 4
+
+    gCtx.lineWidth = 4
     // if (!onDraw(ev)) gCtx.stroke()
-    // if (!onDraw(ev)) gCurrShape = 'pen'
     onDraw(ev)
-    // console.log(gCurrShape);
+    gCtx.stroke()
     console.log(gPen.pos.x, gPen.pos.y);
     gLine.push(gPen.pos.x, gPen.pos.y)
-    
+
     // gLine.
+    gCtx.lineTo(gPen.pos.x, gPen.pos.y)
 }
 
 function onEndLine(ev) {
     gPen.isDown = false
     gCtx.closePath()
-}
-
-function drawPen(x, y){
-    
-    gCtx.beginPath()
-    
-    gCtx.lineWidth = 4
-    
-    gCtx.stroke()
-
-    gCtx.lineTo(gPen.pos.x, gPen.pos.y)
 }
 
 function drawRect(x, y) {
@@ -133,23 +124,18 @@ function onClearCanvas() {
 
 function onDraw(ev) {
     // const { offsetX, offsetY } = ev
-    
-    console.log(gCurrShape);
+
     //In touch event were not using the offset. instead we need to use the func getEvPos!
     const pos = getEvPos(ev)
 
     switch (gCurrShape) {
         case 'pen':
-            drawPen(pos.x, pos.y)
             break
         case 'rect':
             drawRect(pos.x, pos.y)
             break
         case 'circle':
             drawArc(pos.x, pos.y)
-            break
-        case 'line':
-            drawLine(pos.x, pos.y)
             break
     }
 }
@@ -176,27 +162,16 @@ function getEvPos(ev) {
 
 
 // DOWNLOAD CANVAS
-function downloadImg() {
-    const imgContent = gElCanvas.toDataUrl()
+function downloadImg(elLink) {
+    const imgContent = gElCanvas.toDataURL('image/jpeg')
     elLink.href = imgContent
 }
 
-// UPLOAD TO CANVAS
-function onImgInput(ev) {
-    loadImageFromInput(ev, renderImg)
+function onDownloadCanvas(elLink) {
+	elLink.href = '#'       // Clear the link
+	const dataUrl = gElCanvas.toDataURL()
+
+	elLink.href = dataUrl
+	elLink.download = 'my-img'
 }
 
-// Read the file from the input
-// When done send the image to the callback function
-
-function loadImageFromInput(ev, onImageReady) {
-    const reader = new FileReader()
-
-    reader.onload = ev => {
-        let img = new Image()
-        img.src = ev.target.result
-        img.onload = () => onImageReady(img)
-    }
-    reader.readAsDataURL(ev.target.files[0])
-
-}

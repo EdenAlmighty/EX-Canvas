@@ -11,6 +11,12 @@
 
     <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" accept="image/*">
 
+    <div class="inputs">
+        <a href="#" class="btn" onclick="downloadImg(this)" download="my-img">Download Image</a>
+        <a href="#" class="btn" onclick="onDownloadCanvas(this)" download="my-img">Download Canvas</a>
+        <button class="btn" onclick="onUploadImg()">Upload to Facebook</button>
+    </div>
+
     <div class="canvas-container">
         <canvas width="600" height="800"></canvas>
     </div>
@@ -25,6 +31,8 @@
     </div>
 
 
+    <script src="js/uploadImg.js"></script>
+    <script src="js/uploadToFB.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
